@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6fb;
+            min-height: 100vh;
+        }
+
+        nav {
+            background: #667eea;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav button {
+            background: white;
+            color: #667eea;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .welcome h1 {
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .welcome p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card button {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #message {
+            margin-top: 25px;
+            color: #333;
+        }
+
+        @media (max-width: 768px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            nav h2 {
+                font-size: 19px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <h2>My Dashboard</h2>
+        <button onclick="logout()">Logout</button>
+    </nav>
+
+    <main class="container">
+        <section class="welcome">
+            <h1 id="welcomeMessage">Welcome!</h1>
+            <p>You have successfully logged in to your dashboard.</p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <h3>My Profile</h3>
+                <p>View your personal information and account details.</p>
+                <button onclick="showSection('Profile')">
+                    View Profile
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>My Projects</h3>
+                <p>Explore and manage your projects.</p>
+                <button onclick="showSection('Projects')">
+                    View Projects
+                </button>
+            </div>
+
+            <div class="card">
+                <h3>Settings</h3>
+                <p>Manage your account preferences.</p>
+                <button onclick="showSection('Settings')">
+                    Open Settings
+                </button>
+            </div>
+        </section>
+
+        <p id="message"></p>
+    </main>
+
+    <script>
+        if (localStorage.getItem("loggedIn") !== "true") {
+            window.location.replace("index.html");
+        } else {
+            const email = localStorage.getItem("userEmail");
+            document.getElementById("welcomeMessage").textContent =
+                "Welcome, " + (email || "User") + "!";
+        }
+
+        function showSection(section) {
+            document.getElementById("message").textContent =
+                section + " section selected.";
+        }
+
+        function logout() {
+            localStorage.removeItem("loggedIn");
+            localStorage.removeItem("userEmail");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>
